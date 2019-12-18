@@ -12,28 +12,8 @@ ArrayList<Item> items;
 void setup() {
   
   dt = 1.0/(frameRate*(float)(Config.itr));
-  String[] lines=loadStrings("map.txt");
-  rows = lines.length;
-  cols = lines[0].length();
+  loadMap();
   
-  cells = new Cell[rows][cols];
-  laplacian=new float[rows][cols];
-  
-  int s = (int)Config.cellSize;
-  
-  for(int i=0;i<rows;i++) {
-    for(int j=0;j<cols;j++) {
-      int celltype=lines[i].charAt(j)-'0';
-      
-      if(celltype==0) //free cell
-        cells[i][j]=new Cell(j*s,i*s,10000.0,false);
-      if(celltype==1) //not diffusive at all, 'wall'
-        cells[i][j]=new Cell(j*s,i*s,0.0,false);
-      if(celltype==2) //source cell
-        cells[i][j]=new Cell(j*s,i*s,1.0,true);
-      
-    }
-  }
   items = new ArrayList();
   players = new ArrayList();
   players.add(new Player(100, 100, Config.cellSize, 'w', 'a', 's', 'd', '`'));
@@ -42,6 +22,53 @@ void setup() {
     String[] args = {"Player"};
     PApplet.runSketch(args, players.get(i));
     players.get(i).getSurface().setTitle("Player"+(i+1));
+  }
+}
+
+void loadMap(){
+  String[] _lines=loadStrings("1.txt");
+  rows = _lines.length;
+  cols = _lines[0].length();
+  for(int i=1;i<=Config.floors;i++){
+    String[] lines=loadStrings(i+".txt");
+    rows += lines.length;
+    if(cols != lines[0].length()){
+      println("Wrong input file, dimension not matching:" + i + ".txt");
+      exit();
+    }
+  }
+  
+  cells = new Cell[rows][cols];
+  laplacian=new float[rows][cols];
+  
+  
+  int s = (int)Config.cellSize;
+  
+  int currentRow = 0;
+  int i;
+  for(int k=1;k<=Config.floors;k++){
+    String[] lines=loadStrings(k+".txt");
+    int _rows = lines.length;
+    for(int ii=0;ii<_rows;ii++) {
+      for(int j=0;j<cols;j++) {
+        int celltype=lines[ii].charAt(j)-'0';
+        i = ii+currentRow;
+        if(celltype==0) //free cell
+          cells[i][j]=new Cell(j*s,(i)*s,10000.0,false);
+        if(celltype==1){ //not diffusive at all, 'wall'
+          if(cells[i][j] == null) cells[i][j]=new Cell(j*s,(i)*s,0.0,false);
+        }
+        if(celltype==2) //source cell
+          cells[i][j]=new Cell(j*s,i*s,1.0,true);
+        if(celltype==3){
+          cells[i][j]=new Cell(j*s,i*s,10000.0,false);
+          if(i+1<rows) cells[i+1][j]=new Cell(j*s,i*s,1.0,true);
+          if(i+2<rows) cells[i+2][j]=new Cell(j*s,i*s,1.0,true);
+        }
+        
+      }
+    }
+    currentRow += _rows;
   }
 }
 
