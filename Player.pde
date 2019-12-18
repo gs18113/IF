@@ -74,7 +74,7 @@ class Player extends PApplet{
   
   void update(float avpoison) {
     if(killed) return;
-    if (millis()-begin>=5000) health-=avpoison/255.0;
+    if (millis()-begin>=Config.immortalTime) health-=avpoison/255.0;
     if(health<0) {
       health=0; killed=true;
     }
