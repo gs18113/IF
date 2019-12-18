@@ -10,7 +10,7 @@ class ForceBuff extends Buff {
   }
   
   Pair applyBuff(float dx, float dy) {
-    Pair v=new Pair(fv*cos(angle), fv*sin(angle));
+    Pair v=new Pair(fv*cos(angle), fv*sin(angle)); //change later
     return v;
   }
 }
