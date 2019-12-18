@@ -28,7 +28,7 @@ class Player extends PApplet{
     }
     synchronized(items){
       for(Item item : items){
-        if(s2*Config.cellSize< item.x && item.x < e2*Config.cellSize && s1*Config.cellSize< item.y && item.y < e1*Config.cellSize) item.display(this);
+        if(s2< item.x && item.x < e2 && s1 < item.y && item.y < e1) item.display(this);
       }
     }
     for(int i=0;i<rows;i++){
@@ -100,7 +100,6 @@ class Player extends PApplet{
       if(keys_down[3]) {
         fv.fi=v;
       }
-      println(v+" "+fv.fi+" "+fv.se);
       for (int i=0; i<appliedBuffs.size(); i++) {
         fv=appliedBuffs.get(i).applyBuff(fv.fi,fv.se);
       }

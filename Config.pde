@@ -7,4 +7,8 @@ public class Config{
   static final float cellSize = 30.0;
   static final float dispX = (panelWidth-cellSize)/2;
   static final float dispY = (panelHeight-cellSize)/2;
+  static final int itemInterval = 1000;
+  static final float itemDeviation = 5;
+  static final float eps=1e-6;
+  static final int itemTypes = 2;
 }

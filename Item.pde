@@ -24,3 +24,13 @@ public abstract class Item {
   
   abstract void applyItem(Player player);
 }
+
+Item createItem(int x, int y, int type){
+  switch(type){
+    case(RandomItem.itemType):
+      return new RandomItem(x, y);
+    case(BoostItem.itemType):
+      return new BoostItem(x, y);
+  }
+  return null;
+}

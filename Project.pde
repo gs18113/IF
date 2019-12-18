@@ -5,7 +5,6 @@ float[][] laplacian;
 ArrayList<Player> players;
 float dt;
 int rows, cols;
-float pix;
 
 ArrayList<Item> items;
 
@@ -45,7 +44,7 @@ void setup() {
   }
 }
 
-int last;
+int lastGeneration;
 
 void draw() {
   background(125);
@@ -54,6 +53,14 @@ void draw() {
       laplacian[i][j]=(cells[i-1][j].getpoison(i-1,j,-1,0)+cells[i+1][j].getpoison(i+1,j,1,0)+cells[i][j-1].getpoison(i,j-1,0,-1)+cells[i][j+1].getpoison(i,j+1,0,1)-4*cells[i][j].poison) / (Config.cellSize*Config.cellSize);
     for(int i=1;i<rows-1;i++) for(int j=1;j<cols-1;j++)
       cells[i][j].update(laplacian[i][j],dt);
+  }
+  if(millis()/Config.itemInterval != lastGeneration){
+    lastGeneration = millis()/Config.itemInterval;
+    float minY = Config.panelHeight;
+    for(Player player : players) minY = min(minY, player.y);
+    int py = (int)map(constrain(randomGaussian()*Config.itemDeviation + minY, 0, Config.panelHeight), 0, Config.panelHeight, 0, rows-Config.eps);
+    int px = (int)(Math.random()*cols);
+    items.add(createItem(px, py, (int)(Math.random()*Config.itemTypes)));
   }
   for(Player player : players){
     int pj=floor(player.x/Config.cellSize); float jw=(player.x/Config.cellSize-floor(player.x/Config.cellSize));
