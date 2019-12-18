@@ -24,6 +24,6 @@ public class Config{
   static final float heal = 20.0;
   static final int immortalTime = 10000;
   static final float endingY = 900;
-  static final int floors = 3;
-  static final float playerSize = 30.0;
+  static final int floors = 1;
+  static final float playerSize = 45.0;
 }
