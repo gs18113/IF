@@ -58,7 +58,6 @@ void draw() {
     lastGeneration = millis()/Config.itemInterval;
     float minY = Config.panelHeight;
     for(Player player : players) if(!player.killed) minY = min(minY, player.y);
-    println(minY);
     int py = (int)map(constrain(randomGaussian()*Config.itemDeviation + minY, 0, Config.panelHeight), 0, Config.panelHeight, 1, rows-1-Config.eps);
     int px = (int)(Math.random()*(cols-2))+1;
     items.add(createItem(px, py, (int)(Math.random()*Config.itemTypes)));

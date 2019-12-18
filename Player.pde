@@ -107,17 +107,19 @@ class Player extends PApplet{
         fv.fi+=v;
         cnt2--;
       }
-      fv.fi /= sqrt((float)cnt1*cnt1+cnt2*cnt2);
-      fv.se /= sqrt((float)cnt1*cnt1+cnt2*cnt2);
-      for (Buff buff:appliedBuffs) {
-        fv=buff.applyBuff(fv.fi,fv.se);
+      if(cnt1 != cnt2 || cnt2 != 0){
+        fv.fi /= sqrt((float)cnt1*cnt1+cnt2*cnt2);
+        fv.se /= sqrt((float)cnt1*cnt1+cnt2*cnt2);
+        for (Buff buff:appliedBuffs) {
+          fv=buff.applyBuff(fv.fi,fv.se);
+        }
+        x+=fv.fi;
+        y+=fv.se;
+        if (fv.fi<0&&cells[floor(y/w)][floor(x/w)].alpha==0) x-=fv.fi;
+        else if (fv.fi>0&&cells[floor(y/w)][floor(x/w)+1].alpha==0) x-=fv.fi;
+        if (fv.se<0&&cells[floor(y/w)][floor(x/w)].alpha==0) y-=fv.se;
+        else if (fv.se>0&&cells[floor(y/w)+1][floor(x/w)].alpha==0) y-=fv.se;
       }
-      x+=fv.fi;
-      y+=fv.se;
-      if (fv.fi<0&&cells[floor(y/w)][floor(x/w)].alpha==0) x-=fv.fi;
-      else if (fv.fi>0&&cells[floor(y/w)][floor(x/w)+1].alpha==0) x-=fv.fi;
-      if (fv.se<0&&cells[floor(y/w)][floor(x/w)].alpha==0) y-=fv.se;
-      else if (fv.se>0&&cells[floor(y/w)+1][floor(x/w)].alpha==0) y-=fv.se;
     }
     
     int nTime=millis();
@@ -137,8 +139,10 @@ class Player extends PApplet{
     }
   }
   void attack(Player player){
-    float dist = sqrt((float)(x-player.x)*(x-player.x)+(y-player.y)*(y-player.y)) * Config.cellSize;
+    float dist = sqrt((float)(x-player.x)*(x-player.x)+(y-player.y)*(y-player.y));
+    println(dist);
     if(dist > Config.attackDist || dist == 0) return;
+    println("asfasdfas");
     float rad = atan2(player.y-y, player.x-x);
     float fv = constrain(Config.attackMag / dist, 0, Config.attackMax);
     player.appliedBuffs.add(new ForceBuff(Config.attackTime, rad, fv));
