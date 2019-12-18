@@ -55,20 +55,22 @@ void draw() {
       cells[i][j].update(laplacian[i][j],dt);
   }
   if(millis()/Config.itemInterval != lastGeneration){
-    lastGeneration = millis()/Config.itemInterval;
-    float minY = Config.panelHeight;
-    for(Player player : players) if(!player.killed) minY = min(minY, player.y);
-    int py = (int)map(constrain(randomGaussian()*Config.itemDeviation + minY, 0, Config.panelHeight), 0, Config.panelHeight, 1, rows-1-Config.eps);
-    int px = (int)(Math.random()*(cols-2))+1;
-    items.add(createItem(px, py, (int)(Math.random()*Config.itemTypes)));
+    synchronized(items){
+      lastGeneration = millis()/Config.itemInterval;
+      float minY = Config.panelHeight;
+      for(Player player : players) if(!player.killed) minY = min(minY, player.y);
+      int py = (int)map(constrain(randomGaussian()*Config.itemDeviation + minY, 0, Config.panelHeight), 0, Config.panelHeight, 1, rows-1-Config.eps);
+      int px = (int)(Math.random()*(cols-2))+1;
+      items.add(createItem(px, py, (int)(Math.random()*Config.itemTypes)));
+    }
   }
   for(Player player : players){
     int pj=floor(player.x/Config.cellSize); float jw=(player.x/Config.cellSize-floor(player.x/Config.cellSize));
     int pi=floor(player.y/Config.cellSize); float iw=(player.y/Config.cellSize-floor(player.y/Config.cellSize));
     float avpoison=(cells[pi][pj].poison*jw*iw+cells[pi+1][pj].poison*jw*(1-iw)+cells[pi][pj+1].poison*(1-jw)*iw+cells[pi+1][pj+1].poison*(1-jw)*(1-iw));
     player.update(avpoison);
-    Iterator<Item> it = items.iterator();
     synchronized(items){
+    Iterator<Item> it = items.iterator();
       while(it.hasNext()){
         Item item = it.next();
         if((item.x==pj&&item.y==pi)
