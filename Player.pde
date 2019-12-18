@@ -29,7 +29,9 @@ class Player extends PApplet{
         if(cells[i][j].source) cells[i][j].drawcorners(this);
       }
     }
-    show(); showstatus();
+    for(Player player : players){
+      player.show(this); player.showstatus(this);
+    }
   }
   
   Player(float x,float y,float w, Object... keys) {
@@ -41,19 +43,22 @@ class Player extends PApplet{
     forcemove=false;
   }
     
-  void show() {
-    stroke(0); fill(0,0,125);
-    if(killed) fill(125,0,125);
-    rect((Config.panelWidth-Config.cellSize)/2, (Config.panelHeight-Config.cellSize)/2 , w, w);
+  void show(Player player) {
+    player.stroke(0); player.fill(0,0,125);
+    if(killed) player.fill(125,0,125);
+    player.pushMatrix();
+    player.translate((Config.panelWidth-w)/2, (Config.panelHeight-w)/2);
+    player.rect(x-player.x, y-player.y, w, w);
+    player.popMatrix();
   }
   
-  void showstatus() {
+  void showstatus(Player player) {
     
   }
   
   void update(float avpoison) {
     if(killed) return;
-    //health-=avpoison/255.0;
+    health-=avpoison/255.0;
     if(health<0) {
       health=0; killed=true;
     }
