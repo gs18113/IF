@@ -10,7 +10,7 @@ ArrayList<Item> items;
 
 void setup() {
   
-  dt = 1.0/(60.0*(float)(Config.itr));
+  dt = 1.0/(frameRate*(float)(Config.itr));
   String[] lines=loadStrings("map.txt");
   rows = lines.length;
   cols = lines[0].length();
@@ -35,8 +35,8 @@ void setup() {
   }
   items = new ArrayList();
   players = new ArrayList();
-  players.add(new Player(100, 100, Config.cellSize, 'w', 'a', 's', 'd'));
-  players.add(new Player(100, 100, Config.cellSize, UP, LEFT, DOWN, RIGHT));
+  players.add(new Player(100, 100, Config.cellSize, 'w', 'a', 's', 'd', '`'));
+  players.add(new Player(100, 100, Config.cellSize, UP, LEFT, DOWN, RIGHT, 'm'));
   for(int i=0;i<players.size();i++){
     String[] args = {"Player"};
     PApplet.runSketch(args, players.get(i));
@@ -57,9 +57,10 @@ void draw() {
   if(millis()/Config.itemInterval != lastGeneration){
     lastGeneration = millis()/Config.itemInterval;
     float minY = Config.panelHeight;
-    for(Player player : players) minY = min(minY, player.y);
-    int py = (int)map(constrain(randomGaussian()*Config.itemDeviation + minY, 0, Config.panelHeight), 0, Config.panelHeight, 0, rows-Config.eps);
-    int px = (int)(Math.random()*cols);
+    for(Player player : players) if(!player.killed) minY = min(minY, player.y);
+    println(minY);
+    int py = (int)map(constrain(randomGaussian()*Config.itemDeviation + minY, 0, Config.panelHeight), 0, Config.panelHeight, 1, rows-1-Config.eps);
+    int px = (int)(Math.random()*(cols-2))+1;
     items.add(createItem(px, py, (int)(Math.random()*Config.itemTypes)));
   }
   for(Player player : players){
