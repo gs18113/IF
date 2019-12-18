@@ -72,11 +72,11 @@ class Player extends PApplet{
   
   void update(float avpoison) {
     if(killed) return;
-    //health-=avpoison/255.0;
+    health-=avpoison/255.0;
     if(health<0) {
       health=0; killed=true;
     }
-    v=health/20.0; //change later
+    v=health/50.0+2; //change later
     
     forcemove=false;
     for (Buff buff:appliedBuffs) {
