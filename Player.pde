@@ -12,11 +12,13 @@ class Player extends PApplet{
   boolean forcemove;
   LinkedList<Buff> appliedBuffs=new LinkedList<Buff>();
   int lastAttack;
+  int begin;
   //ControlP5 cp5=new ControlP5(this);
   
   public void settings() {
     size(Config.panelWidth, Config.panelHeight);
     //cp5.addSlider("health").setRange(0,200).setSliderMode(Slider.FLEXIBLE);
+    begin=millis();
   }
   
   public void draw() {
@@ -72,7 +74,7 @@ class Player extends PApplet{
   
   void update(float avpoison) {
     if(killed) return;
-    health-=avpoison/255.0;
+    if (millis()-begin>=5000) health-=avpoison/255.0;
     if(health<0) {
       health=0; killed=true;
     }
