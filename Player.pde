@@ -10,6 +10,7 @@ class Player extends PApplet{
   boolean[] keys_down;
   boolean forcemove;
   LinkedList<Buff> appliedBuffs=new LinkedList<Buff>();
+  int lastAttack;
   
   public void settings() {
     size(Config.panelWidth, Config.panelHeight);
@@ -66,7 +67,7 @@ class Player extends PApplet{
   
   void update(float avpoison) {
     if(killed) return;
-    health-=avpoison/255.0;
+    //health-=avpoison/255.0;
     if(health<0) {
       health=0; killed=true;
     }
@@ -89,18 +90,25 @@ class Player extends PApplet{
     
     if (!forcemove) {
       Pair fv=new Pair();
+      int cnt1=0, cnt2=0;
       if(keys_down[0]) {
-        fv.se=-1*v;
+        fv.se+=-1*v;
+        cnt1++;
       }
       if(keys_down[1]) {
-        fv.fi=-1*v;
+        fv.fi+=-1*v;
+        cnt2++;
       }
       if(keys_down[2]) {
-        fv.se=v;
+        fv.se+=v;
+        cnt1--;
       }
       if(keys_down[3]) {
-        fv.fi=v;
+        fv.fi+=v;
+        cnt2--;
       }
+      fv.fi /= sqrt((float)cnt1*cnt1+cnt2*cnt2);
+      fv.se /= sqrt((float)cnt1*cnt1+cnt2*cnt2);
       for (Buff buff:appliedBuffs) {
         fv=buff.applyBuff(fv.fi,fv.se);
       }
@@ -113,6 +121,26 @@ class Player extends PApplet{
     }
     
     int nTime=millis();
-    //
+    Iterator<Buff> it=appliedBuffs.iterator();
+    while (it.hasNext()) {
+      Buff buff=it.next();
+      if (buff.t<=nTime-buff.sTime) it.remove();
+    }
+    
+    if(keys_down[4]){
+      if(millis() - lastAttack > Config.attackInterval){
+        lastAttack = millis();
+        for(Player p : players){
+          if(p != this) attack(p);
+        }
+      }
+    }
+  }
+  void attack(Player player){
+    float dist = sqrt((float)(x-player.x)*(x-player.x)+(y-player.y)*(y-player.y)) * Config.cellSize;
+    if(dist > Config.attackDist || dist == 0) return;
+    float rad = atan2(player.y-y, player.x-x);
+    float fv = constrain(Config.attackMag / dist, 0, Config.attackMax);
+    player.appliedBuffs.add(new ForceBuff(Config.attackTime, rad, fv));
   }
 }
