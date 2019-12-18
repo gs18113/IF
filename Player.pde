@@ -12,14 +12,21 @@ class Player extends PApplet{
   boolean forcemove;
   LinkedList<Buff> appliedBuffs=new LinkedList<Buff>();
   int lastAttack;
-  //ControlP5 cp5=new ControlP5(this);
+  ControlP5 cp5;
+  Slider _health, _attackTime;
   
   public void settings() {
     size(Config.panelWidth, Config.panelHeight);
-    //cp5.addSlider("health").setRange(0,200).setSliderMode(Slider.FLEXIBLE);
   }
   
   public void draw() {
+    if(cp5 == null){
+      cp5 = new ControlP5(this);
+      _health = cp5.addSlider("health").setPosition(Config.panelWidth-150, 10).setRange(0,Config.health).setSize(100, 20).setValue(Config.health);
+      _health.setLock(true);
+      _attackTime = cp5.addSlider("attackTime").setPosition(Config.panelWidth-150, 30).setRange(0,Config.attackTime).setSize(100, 20).setValue(Config.health);
+      _attackTime.setLock(true);
+    }
     background(125);
     rectMode(CENTER);
     int s1=max((int)(y/Config.cellSize-Config.panelHeight/Config.cellSize), 0);
@@ -77,6 +84,10 @@ class Player extends PApplet{
       health=0; killed=true;
     }
     v=health/50.0+2; //change later
+    if(_attackTime != null){
+      _health.setValue(health);
+      _attackTime.setValue(constrain(Config.attackTime-millis()+lastAttack, 0, Config.attackTime));
+    }
     
     forcemove=false;
     for (Buff buff:appliedBuffs) {

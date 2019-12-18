@@ -44,7 +44,7 @@ void setup() {
   }
 }
 
-int lastGeneration;
+int lastGeneration, lastHealthGen;
 
 void draw() {
   background(125);
@@ -54,14 +54,22 @@ void draw() {
     for(int i=1;i<rows-1;i++) for(int j=1;j<cols-1;j++)
       cells[i][j].update(laplacian[i][j],dt);
   }
-  if(millis()/Config.itemInterval != lastGeneration){
-    synchronized(items){
+  synchronized(items){
+    if(millis()/Config.itemInterval != lastGeneration){
       lastGeneration = millis()/Config.itemInterval;
       float minY = Config.panelHeight;
       for(Player player : players) if(!player.killed) minY = min(minY, player.y);
       int py = (int)map(constrain(randomGaussian()*Config.itemDeviation + minY, 0, Config.panelHeight), 0, Config.panelHeight, 1, rows-1-Config.eps);
       int px = (int)(Math.random()*(cols-2))+1;
       items.add(createItem(px, py, (int)(Math.random()*Config.itemTypes)));
+    }
+    if(millis()/Config.healthInterval != lastHealthGen){
+      lastGeneration = millis()/Config.healthInterval;
+      float maxY = 0;
+      for(Player player : players) if(!player.killed) maxY = max(maxY, player.y);
+      int py = (int)map(constrain(randomGaussian()*Config.itemDeviation + maxY, 0, Config.panelHeight), 0, Config.panelHeight, 1, rows-1-Config.eps);
+      int px = (int)(Math.random()*(cols-2))+1;
+      items.add(createItem(px, py, HealthItem.itemType));
     }
   }
   for(Player player : players){
