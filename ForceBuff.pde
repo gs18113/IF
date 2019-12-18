@@ -1,5 +1,5 @@
 
-class ForceBuff extends Buff {
+public class ForceBuff extends Buff {
   float angle;
   float fv;
   

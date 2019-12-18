@@ -1,5 +1,5 @@
 
-class Cell {
+public class Cell {
   int x, y;
   float poison;
   float alpha;

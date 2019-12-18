@@ -1,5 +1,5 @@
 
-class Item {
+public class Item {
   float px, py, l, sr;
   int type, col;
   

@@ -1,5 +1,5 @@
 
-class ItemBuff extends Buff {
+public class ItemBuff extends Buff {
   float rate;
   
   ItemBuff(int t, float rate) {

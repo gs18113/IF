@@ -1,5 +1,5 @@
 
-class Buff {
+public abstract class Buff {
   int t, type;
   
   Buff(int t, int type) {
@@ -7,8 +7,5 @@ class Buff {
     this.type=type;
   }
   
-  Pair applyBuff(float dx, float dy) {
-    Pair v=new Pair(dx, dy);
-    return v;
-  }
+  abstract Pair applyBuff(float dx, float dy);
 }
