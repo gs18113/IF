@@ -15,6 +15,7 @@ class Player extends PApplet{
   
   public void draw() {
     background(125);
+    rectMode(CENTER);
     int s1=max((int)(y/Config.cellSize-Config.panelHeight/Config.cellSize), 0);
     int s2=max((int)(x/Config.cellSize-Config.panelWidth/Config.cellSize), 0);
     float e1=y/Config.cellSize+Config.panelHeight/Config.cellSize;
@@ -23,6 +24,9 @@ class Player extends PApplet{
       for(int j=s2;j<e2&&j<cols;j++){
         cells[i][j].show(this);
       }
+    }
+    for(Item item : items){
+      if(s2*Config.cellSize< item.x && item.x < e2*Config.cellSize && s1*Config.cellSize< item.y && item.y < e1*Config.cellSize) item.display(this);
     }
     for(int i=0;i<rows;i++){
       for(int j=0;j<cols;j++){

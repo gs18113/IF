@@ -1,14 +1,15 @@
 
 class RandomItem extends Item {
   int rnd;
+  public static final int itemType = 1;
   
-  RandomItem(float px, float py) {
-    super(px, py, 1);
+  RandomItem(int x, int y) {
+    super(x, y, itemType);
     rnd=int(random(-1,2));
-    col=0;
+    this.itemColor=0;
   }
   
-  void display() {
-    super.display();
+  void applyItem(Player player){
+    
   }
 }

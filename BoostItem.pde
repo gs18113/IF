@@ -1,11 +1,13 @@
 
 class BoostItem extends Item {
+  public static final int itemType = 0;
+  
   BoostItem(int px, int py) {
-    super(px,py,0);
-    col=255;
+    super(px,py,itemType);
+    this.itemColor=255;
   }
   
-  void display() {
-    super.display();
+  void applyItem(Player player){
+    
   }
 }

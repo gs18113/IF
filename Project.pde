@@ -1,3 +1,5 @@
+import java.util.Iterator;
+
 Cell[][] cells;
 float[][] laplacian;
 ArrayList<Player> players;
@@ -43,6 +45,8 @@ void setup() {
   items = new ArrayList();
 }
 
+int last;
+
 void draw() {
   background(125);
   for(int t=0;t<Config.itr;t++) {
@@ -51,14 +55,22 @@ void draw() {
     for(int i=1;i<rows-1;i++) for(int j=1;j<cols-1;j++)
       cells[i][j].update(laplacian[i][j],dt);
   }
-  for(Item item : items){
-    item.display();
-  }
   for(Player player : players){
     int pj=floor(player.x/Config.cellSize); float jw=(player.x/Config.cellSize-floor(player.x/Config.cellSize));
     int pi=floor(player.y/Config.cellSize); float iw=(player.y/Config.cellSize-floor(player.y/Config.cellSize));
     float avpoison=(cells[pi][pj].poison*jw*iw+cells[pi+1][pj].poison*jw*(1-iw)+cells[pi][pj+1].poison*(1-jw)*iw+cells[pi+1][pj+1].poison*(1-jw)*(1-iw));
     player.update(avpoison);
+    Iterator<Item> it = items.iterator();
+    while(it.hasNext()){
+      Item item = it.next();
+      if((item.x==pj&&item.y==pi)
+      ||(item.x==pj&&item.y==pi+1)
+      ||(item.x==pj+1&&item.y==pi)
+      ||(item.x==pj+1&&item.y==pi+1)){
+        item.applyItem(player);
+        it.remove();
+      }
+    }
   }
 }
 

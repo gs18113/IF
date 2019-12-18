@@ -1,21 +1,26 @@
 
-public class Item {
-  float x, y, w, strk;
+public abstract class Item {
+  int x, y;
+  float strk;
   int type, itemColor;
   
-  Item(float x, float y, int type) {
+  Item(int x, int y, int type) {
     this.x=x;
     this.y=y;
     this.type=type;
-    w=5;
     strk=150;
     itemColor=100;
   }
   
-  void display() {
-    fill(itemColor);
-    rectMode(CENTER);
-    stroke(strk);
-    rect(x, y, w, w);
+  void display(Player player) {
+    player.pushMatrix();
+    player.translate((Config.panelWidth-Config.cellSize)/2, (Config.panelHeight-Config.cellSize)/2);
+    player.fill(itemColor);
+    player.rectMode(CENTER);
+    player.stroke(strk);
+    player.rect(x*Config.cellSize-player.x, y*Config.cellSize-player.y, Config.cellSize, Config.cellSize);
+    player.popMatrix();
   }
+  
+  abstract void applyItem(Player player);
 }
