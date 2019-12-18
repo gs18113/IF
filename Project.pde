@@ -33,9 +33,10 @@ void setup() {
   players = new ArrayList();
   players.add(new Player(100, 100, Config.cellSize, 'w', 'a', 's', 'd'));
   players.add(new Player(100, 100, Config.cellSize, UP, LEFT, DOWN, RIGHT));
-  for(Player player : players){
+  for(int i=0;i<players.size();i++){
     String[] args = {"Player"};
-    PApplet.runSketch(args, player);
+    PApplet.runSketch(args, players.get(i));
+    players.get(i).frame.setTitle("Player"+(i+1));
   }
   frame.requestFocus();
 }
