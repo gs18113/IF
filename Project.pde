@@ -29,7 +29,11 @@ void loadMap(){
   String[] _lines=loadStrings("1F.txt");
   rows = _lines.length;
   cols = _lines[0].length();
+<<<<<<< HEAD
   for(int i=1;i<=Config.floors;i++){
+=======
+  for(int i=2;i<=Config.floors;i++){
+>>>>>>> e7071030dc3f71e58230511ad849f5fc8d93af95
     String[] lines=loadStrings(i+"F.txt");
     rows += lines.length;
     if(cols != lines[0].length()){
@@ -47,7 +51,7 @@ void loadMap(){
   int currentRow = 0;
   int i;
   for(int k=1;k<=Config.floors;k++){
-    String[] lines=loadStrings(k+".txt");
+    String[] lines=loadStrings(k+"F.txt");
     int _rows = lines.length;
     for(int ii=0;ii<_rows;ii++) {
       for(int j=0;j<cols;j++) {
