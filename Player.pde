@@ -1,3 +1,4 @@
+import java.util.*;
 
 class Player extends PApplet{
   float x,y;
@@ -8,7 +9,7 @@ class Player extends PApplet{
   Object[] keys; // ={'w','a','s','d'}
   boolean[] keys_down;
   boolean forcemove;
-  ArrayList<Buff> appliedBuffs=new ArrayList<Buff>();
+  LinkedList<Buff> appliedBuffs=new LinkedList<Buff>();
   
   public void settings() {
     size(Config.panelWidth, Config.panelHeight);
@@ -72,10 +73,10 @@ class Player extends PApplet{
     v=health/20.0; //change later
     
     forcemove=false;
-    for (int i=0; i<appliedBuffs.size(); i++) {
-      if (appliedBuffs.get(i).type==0) {
+    for (Buff buff:appliedBuffs) {
+      if (buff.type==0) {
         forcemove=true;
-        Pair fv=appliedBuffs.get(i).applyBuff(0,0);
+        Pair fv=buff.applyBuff(0,0);
         x+=fv.fi;
         y+=fv.se;
         if (fv.fi<0&&cells[floor(y/w)][floor(x/w)].alpha==0) x-=fv.fi;
@@ -100,8 +101,8 @@ class Player extends PApplet{
       if(keys_down[3]) {
         fv.fi=v;
       }
-      for (int i=0; i<appliedBuffs.size(); i++) {
-        fv=appliedBuffs.get(i).applyBuff(fv.fi,fv.se);
+      for (Buff buff:appliedBuffs) {
+        fv=buff.applyBuff(fv.fi,fv.se);
       }
       x+=fv.fi;
       y+=fv.se;
@@ -110,5 +111,8 @@ class Player extends PApplet{
       if (fv.se<0&&cells[floor(y/w)][floor(x/w)].alpha==0) y-=fv.se;
       else if (fv.se>0&&cells[floor(y/w)+1][floor(x/w)].alpha==0) y-=fv.se;
     }
+    
+    int nTime=millis();
+    //
   }
 }
