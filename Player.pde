@@ -5,8 +5,12 @@ class Player extends PApplet{
   float v;
   float health;
   boolean killed;
+<<<<<<< HEAD
   Object[] keys; // ={'w','a','s','d'}
   boolean[] keys_down;
+=======
+  boolean forcemove;
+>>>>>>> 3328917220c9eece4ea365e3df4e8c4d46407b5f
   
   public void settings() {
     size(Config.panelWidth, Config.panelHeight);
@@ -34,11 +38,16 @@ class Player extends PApplet{
   Player(float x,float y,float w, Object... keys) {
     super();
     this.x=x; this.y=y; this.w=w;
+<<<<<<< HEAD
     health=200.0; killed=false;
     this.keys = keys;
     keys_down = new boolean[Config.playerKeys];
+=======
+    health=100.0; killed=false;
+    forcemove=false;
+>>>>>>> 3328917220c9eece4ea365e3df4e8c4d46407b5f
   }
-  
+    
   void show() {
     stroke(0); fill(0,0,125);
     if(killed) fill(125,0,125);
@@ -55,7 +64,7 @@ class Player extends PApplet{
     if(health<0) {
       health=0; killed=true;
     }
-    v=health/20.0;
+    v=health/20.0; //change later
     if(keys_down[0]) {
       y-=v; if(cells[floor(y/w)][floor(x/w)].alpha==0) y+=v;
     }
