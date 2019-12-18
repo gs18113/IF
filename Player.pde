@@ -27,7 +27,7 @@ class Player extends PApplet{
       cp5 = new ControlP5(this);
       _health = cp5.addSlider("health").setPosition(Config.panelWidth-150, 10).setRange(0,Config.health).setSize(100, 20).setValue(Config.health);
       _health.setLock(true);
-      _attackTime = cp5.addSlider("attackTime").setPosition(Config.panelWidth-150, 30).setRange(0,Config.attackTime).setSize(100, 20).setValue(Config.health);
+      _attackTime = cp5.addSlider("attackTime").setPosition(Config.panelWidth-150, 30).setRange(0,Config.attackInterval).setSize(100, 20).setValue(Config.health);
       _attackTime.setLock(true);
     }
     background(125);
@@ -96,7 +96,7 @@ class Player extends PApplet{
     v=health/50.0+2; //change later
     if(_attackTime != null){
       _health.setValue(health);
-      _attackTime.setValue(constrain(Config.attackTime-millis()+lastAttack, 0, Config.attackTime));
+      _attackTime.setValue(constrain(Config.attackInterval-millis()+lastAttack, 0, Config.attackInterval));
     }
     
     forcemove=false;
