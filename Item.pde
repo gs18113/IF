@@ -1,7 +1,7 @@
 
 class Item {
   float px, py, l, sr;
-  int type;
+  int type, col;
   
   Item(float px, float py, int type) {
     this.px=px;
@@ -9,10 +9,11 @@ class Item {
     this.type=type;
     l=5;
     sr=150;
+    col=100;
   }
   
   void display() {
-    fill(100);
+    fill(col);
     rectMode(CENTER);
     stroke(sr);
     rect(px, py, l, l);
