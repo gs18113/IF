@@ -10,7 +10,7 @@ public class Config{
   static final int itemInterval = 3000;
   static final int healthInterval = 3000;
   static final float itemDeviation = 5;
-  static final float eps=1e-6;
+  static final float eps=1e-4;
   static final int itemTypes = 2;
   static final int attackInterval = 2000;
   static final float attackDist = 100.0;
@@ -25,4 +25,5 @@ public class Config{
   static final int immortalTime = 10000;
   static final float endingY = 900;
   static final int floors = 3;
+  static final float playerSize = 30.0;
 }

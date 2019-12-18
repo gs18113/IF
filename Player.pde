@@ -90,7 +90,7 @@ class Player extends PApplet{
   
   void update(float avpoison) {
     if(killed) return;
-    if (millis()-begin>=Config.immortalTime) health-=avpoison/255.0;
+    //if (millis()-begin>=Config.immortalTime) health-=avpoison/255.0;
     if(health<0) {
       health=0; killed=true;
     }
@@ -105,12 +105,7 @@ class Player extends PApplet{
       if (buff.type==0) {
         forcemove=true;
         Pair fv=buff.applyBuff(0,0);
-        x+=fv.fi;
-        y+=fv.se;
-        if (fv.fi<0&&cells[floor(y/w)][floor(x/w)].alpha==0) x-=fv.fi;
-        else if (fv.fi>0&&cells[floor(y/w)][floor(x/w)+1].alpha==0) x-=fv.fi;
-        if (fv.se<0&&cells[floor(y/w)][floor(x/w)].alpha==0) y-=fv.se;
-        else if (fv.se>0&&cells[floor(y/w)+1][floor(x/w)].alpha==0) y-=fv.se;
+        applyMovement(fv);
         break;
       }
     }
@@ -140,12 +135,7 @@ class Player extends PApplet{
         for (Buff buff:appliedBuffs) {
           fv=buff.applyBuff(fv.fi,fv.se);
         }
-        x+=fv.fi;
-        y+=fv.se;
-        if (fv.fi<0&&cells[floor(y/w)][floor(x/w)].alpha==0) x-=fv.fi;
-        else if (fv.fi>0&&cells[floor(y/w)][floor(x/w)+1].alpha==0) x-=fv.fi;
-        if (fv.se<0&&cells[floor(y/w)][floor(x/w)].alpha==0) y-=fv.se;
-        else if (fv.se>0&&cells[floor(y/w)+1][floor(x/w)].alpha==0) y-=fv.se;
+        applyMovement(fv);
       }
     }
     
@@ -165,6 +155,23 @@ class Player extends PApplet{
       }
     }
   }
+  
+  void applyMovement(Pair fv){
+    x+=fv.fi;
+    y+=fv.se;
+    if (fv.fi<0&&cells[floor(y/Config.cellSize)][floor(x/Config.cellSize)].alpha==0) x=Config.cellSize*floor((x+w)/Config.cellSize)+Config.eps;
+    else if (fv.fi<0&&cells[floor((y+w)/Config.cellSize)][floor(x/Config.cellSize)].alpha==0) x=Config.cellSize*floor((x+w)/Config.cellSize)+Config.eps;
+    
+    if (fv.fi>0&&cells[floor(y/Config.cellSize)][floor((x+w)/Config.cellSize)].alpha==0) x=Config.cellSize*floor(x/Config.cellSize)-Config.eps;
+    else if (fv.fi>0&&cells[floor((y+w)/Config.cellSize)][floor((x+w)/Config.cellSize)].alpha==0) x=Config.cellSize*floor(x/Config.cellSize)-Config.eps;
+    
+    if (fv.se<0&&cells[floor(y/Config.cellSize)][floor(x/Config.cellSize)].alpha==0) y=Config.cellSize*floor((y+w)/Config.cellSize)+Config.eps;
+    else if (fv.se<0&&cells[floor(y/Config.cellSize)][floor((x+w)/Config.cellSize)].alpha==0) y=Config.cellSize*floor((y+w)/Config.cellSize)+Config.eps;
+    
+    if (fv.se>0&&cells[floor((y+w)/Config.cellSize)][floor(x/Config.cellSize)].alpha==0) y=Config.cellSize*floor(y/Config.cellSize)-Config.eps;
+    else if (fv.se>0&&cells[floor((y+w)/Config.cellSize)][floor((x+w)/Config.cellSize)].alpha==0) y=Config.cellSize*floor(y/Config.cellSize)-Config.eps;
+  }
+  
   void attack(Player player){
     float dist = sqrt((float)(x-player.x)*(x-player.x)+(y-player.y)*(y-player.y));
     println(dist);
