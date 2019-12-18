@@ -5,6 +5,8 @@ float dt;
 int rows, cols;
 float pix;
 
+ArrayList<Item> items;
+
 void setup() {
   
   dt = 1.0/(60.0*(float)(Config.itr));
@@ -38,7 +40,7 @@ void setup() {
     PApplet.runSketch(args, players.get(i));
     players.get(i).getSurface().setTitle("Player"+(i+1));
   }
-  frame.requestFocus();
+  items = new ArrayList();
 }
 
 void draw() {
@@ -48,6 +50,9 @@ void draw() {
       laplacian[i][j]=(cells[i-1][j].getpoison(i-1,j,-1,0)+cells[i+1][j].getpoison(i+1,j,1,0)+cells[i][j-1].getpoison(i,j-1,0,-1)+cells[i][j+1].getpoison(i,j+1,0,1)-4*cells[i][j].poison) / (Config.cellSize*Config.cellSize);
     for(int i=1;i<rows-1;i++) for(int j=1;j<cols-1;j++)
       cells[i][j].update(laplacian[i][j],dt);
+  }
+  for(Item item : items){
+    item.display();
   }
   for(Player player : players){
     int pj=floor(player.x/Config.cellSize); float jw=(player.x/Config.cellSize-floor(player.x/Config.cellSize));

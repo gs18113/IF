@@ -1,21 +1,21 @@
 
 public class Item {
-  float px, py, l, sr;
-  int type, col;
+  float x, y, w, strk;
+  int type, itemColor;
   
-  Item(float px, float py, int type) {
-    this.px=px;
-    this.py=py;
+  Item(float x, float y, int type) {
+    this.x=x;
+    this.y=y;
     this.type=type;
-    l=5;
-    sr=150;
-    col=100;
+    w=5;
+    strk=150;
+    itemColor=100;
   }
   
   void display() {
-    fill(col);
+    fill(itemColor);
     rectMode(CENTER);
-    stroke(sr);
-    rect(px, py, l, l);
+    stroke(strk);
+    rect(x, y, w, w);
   }
 }
