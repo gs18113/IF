@@ -8,6 +8,7 @@ class Player extends PApplet{
   Object[] keys; // ={'w','a','s','d'}
   boolean[] keys_down;
   boolean forcemove;
+  ArrayList<Buff> appliedBuffs=new ArrayList<Buff>();
   
   public void settings() {
     size(Config.panelWidth, Config.panelHeight);
@@ -63,17 +64,43 @@ class Player extends PApplet{
       health=0; killed=true;
     }
     v=health/20.0; //change later
-    if(keys_down[0]) {
-      y-=v; if(cells[floor(y/w)][floor(x/w)].alpha==0) y+=v;
+    
+    forcemove=false;
+    for (int i=0; i<appliedBuffs.size(); i++) {
+      if (appliedBuffs.get(i).type==0) {
+        forcemove=true;
+        Pair fv=appliedBuffs.get(i).applyBuff(0,0);
+        x+=fv.fi;
+        y+=fv.se;
+        if (fv.fi<0&&cells[floor(y/w)][floor(x/w)].alpha==0) x-=fv.fi;
+        else if (fv.fi>0&&cells[floor(y/w)][floor(x/w)+1].alpha==0) x-=fv.fi;
+        if (fv.se<0&&cells[floor(y/w)][floor(x/w)].alpha==0) y-=fv.se;
+        else if (fv.se>0&&cells[floor(y/w)+1][floor(x/w)].alpha==0) y-=fv.se;
+        break;
+      }
     }
-    if(keys_down[1]) {
-      x-=v; if(cells[floor(y/w)][floor(x/w)].alpha==0) x+=v;
-    }
-    if(keys_down[2]) {
-      y+=v; if(cells[floor(y/w)+1][floor(x/w)].alpha==0) y-=v;
-    }
-    if(keys_down[3]) {
-      x+=v; if(cells[floor(y/w)][floor(x/w)+1].alpha==0) x-=v;
+    
+    if (!forcemove) {
+      Pair fv=new Pair();
+      if(keys_down[0]) {
+        fv.se=-v;
+      }
+      if(keys_down[1]) {
+        fv.fi=-v;
+      }
+      if(keys_down[2]) {
+        fv.se=v;
+      }
+      if(keys_down[3]) {
+        fv.fi=v;
+      }
+      for (int i=0; i<appliedBuffs.size(); i++) {
+        fv=appliedBuffs.get(i).applyBuff(fv.fi,fv.se);
+      }
+      if (fv.fi<0&&cells[floor(y/w)][floor(x/w)].alpha==0) x-=fv.fi;
+      else if (fv.fi>0&&cells[floor(y/w)][floor(x/w)+1].alpha==0) x-=fv.fi;
+      if (fv.se<0&&cells[floor(y/w)][floor(x/w)].alpha==0) y-=fv.se;
+      else if (fv.se>0&&cells[floor(y/w)+1][floor(x/w)].alpha==0) y-=fv.se;
     }
   }
 }
