@@ -147,8 +147,8 @@ class Player extends PApplet{
     float dist = sqrt((float)(x-player.x)*(x-player.x)+(y-player.y)*(y-player.y));
     println(dist);
     if(dist > Config.attackDist || dist == 0) return;
-    println("asfasdfas");
     float rad = atan2(player.y-y, player.x-x);
+    if(-PI*3/4 < rad && rad < -PI/4) return;
     float fv = constrain(Config.attackMag / dist, 0, Config.attackMax);
     player.appliedBuffs.add(new ForceBuff(Config.attackTime, rad, fv));
   }
