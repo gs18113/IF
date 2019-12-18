@@ -5,12 +5,14 @@ class Player {
   float v;
   float health;
   boolean killed;
+  boolean forcemove;
   
   Player(float x,float y,float w) {
     this.x=x; this.y=y; this.w=w;
     health=100.0; killed=false;
+    forcemove=false;
   }
-  
+    
   void show() {
     stroke(0); fill(0,0,125);
     if(killed) fill(125,0,125);
