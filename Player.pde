@@ -1,20 +1,48 @@
 
-class Player {
+class Player extends PApplet{
   float x,y;
   float w;
   float v;
   float health;
   boolean killed;
+  Object[] keys; // ={'w','a','s','d'}
+  boolean[] keys_down;
   
-  Player(float x,float y,float w) {
+  public void settings() {
+    size(Config.panelWidth, Config.panelHeight);
+  }
+  
+  public void draw() {
+    background(125);
+    int s1=max((int)(y/Config.cellSize-Config.panelHeight/Config.cellSize), 0);
+    int s2=max((int)(x/Config.cellSize-Config.panelWidth/Config.cellSize), 0);
+    float e1=y/Config.cellSize+Config.panelHeight/Config.cellSize;
+    float e2=x/Config.cellSize+Config.panelWidth/Config.cellSize;
+    for(int i=s1;i<e1&&i<rows;i++){
+      for(int j=s2;j<e2&&j<cols;j++){
+        cells[i][j].show(this);
+      }
+    }
+    for(int i=0;i<rows;i++){
+      for(int j=0;j<cols;j++){
+        if(cells[i][j].source) cells[i][j].drawcorners(this);
+      }
+    }
+    show(); showstatus();
+  }
+  
+  Player(float x,float y,float w, Object... keys) {
+    super();
     this.x=x; this.y=y; this.w=w;
-    health=100.0; killed=false;
+    health=200.0; killed=false;
+    this.keys = keys;
+    keys_down = new boolean[Config.playerKeys];
   }
   
   void show() {
     stroke(0); fill(0,0,125);
     if(killed) fill(125,0,125);
-    rect(x,y,w,w);
+    rect((Config.panelWidth-Config.cellSize)/2, (Config.panelHeight-Config.cellSize)/2 , w, w);
   }
   
   void showstatus() {
@@ -23,7 +51,7 @@ class Player {
   
   void update(float avpoison) {
     if(killed) return;
-    health-=avpoison/255.0;
+    //health-=avpoison/255.0;
     if(health<0) {
       health=0; killed=true;
     }

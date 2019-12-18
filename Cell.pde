@@ -1,13 +1,12 @@
 
 class Cell {
-  float x,y;
-  float w;
+  int x, y;
   float poison;
   float alpha;
   boolean source;
   
-  Cell(float x,float y,float w,float alpha,boolean source) {
-    this.x=x; this.y=y; this.w=w;
+  Cell(int x,int y,float alpha,boolean source) {
+    this.x=x; this.y=y;
     this.alpha=alpha;
     this.source=source;
     if(source) poison=255.0;
@@ -18,21 +17,27 @@ class Cell {
     if(!source) poison=poison+alpha*laplacian*dt;
   }
   
-  void show() {
+  void show(Player player) {
+    player.pushMatrix();
+    player.translate((Config.panelWidth-Config.cellSize)/2, (Config.panelHeight-Config.cellSize)/2);
     if(alpha==0) {
-      stroke(0); fill(0);
-      rect(x,y,w,w);
+      player.stroke(0); player.fill(0);
+      player.rect(x-player.x,y-player.y,Config.cellSize,Config.cellSize);
     }
     else {
-      noStroke(); fill(0,255,0,poison);
-      rect(x,y,w,w);
+      player.noStroke(); player.fill(0,255,0,poison);
+      player.rect(x-player.x,y-player.y,Config.cellSize,Config.cellSize);
     }
+    player.popMatrix();
   }
   
-  void drawcorners() {
-    if(source) stroke(255,0,0);
-    noFill();
-    rect(x,y,w,w);
+  void drawcorners(Player player) {
+    player.pushMatrix();
+    player.translate((Config.panelWidth-Config.cellSize)/2, (Config.panelHeight-Config.cellSize)/2);
+    if(source) player.stroke(255,0,0);
+    player.noFill();
+    player.rect(x-player.x,y-player.y,Config.cellSize,Config.cellSize);
+    player.popMatrix();
   }
   
   float getpoison(int i,int j,int di,int dj) {
