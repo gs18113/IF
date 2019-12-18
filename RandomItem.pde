@@ -6,7 +6,7 @@ class RandomItem extends Item {
   RandomItem(int x, int y) {
     super(x, y, itemType);
     rnd=int(random(-1,2));
-    this.itemColor=0;
+    itemColor=0;
   }
   
   void applyItem(Player player){

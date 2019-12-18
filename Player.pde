@@ -89,10 +89,10 @@ class Player extends PApplet{
     if (!forcemove) {
       Pair fv=new Pair();
       if(keys_down[0]) {
-        fv.se=-v;
+        fv.se=-1*v;
       }
       if(keys_down[1]) {
-        fv.fi=-v;
+        fv.fi=-1*v;
       }
       if(keys_down[2]) {
         fv.se=v;
@@ -100,9 +100,12 @@ class Player extends PApplet{
       if(keys_down[3]) {
         fv.fi=v;
       }
+      println(v+" "+fv.fi+" "+fv.se);
       for (int i=0; i<appliedBuffs.size(); i++) {
         fv=appliedBuffs.get(i).applyBuff(fv.fi,fv.se);
       }
+      x+=fv.fi;
+      y+=fv.se;
       if (fv.fi<0&&cells[floor(y/w)][floor(x/w)].alpha==0) x-=fv.fi;
       else if (fv.fi>0&&cells[floor(y/w)][floor(x/w)+1].alpha==0) x-=fv.fi;
       if (fv.se<0&&cells[floor(y/w)][floor(x/w)].alpha==0) y-=fv.se;
