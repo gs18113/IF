@@ -72,6 +72,7 @@ class Player extends PApplet{
     if(killed) {
       player.fill(125,0,125);
       gameover=true;
+      text("GameOver", 500, 500);
       noLoop();
     }
     else if (gameover) {
