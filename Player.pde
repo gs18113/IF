@@ -98,6 +98,8 @@ class Player extends PApplet{
       for (int i=0; i<appliedBuffs.size(); i++) {
         fv=appliedBuffs.get(i).applyBuff(fv.fi,fv.se);
       }
+      x+=fv.fi;
+      y+=fv.se;
       if (fv.fi<0&&cells[floor(y/w)][floor(x/w)].alpha==0) x-=fv.fi;
       else if (fv.fi>0&&cells[floor(y/w)][floor(x/w)+1].alpha==0) x-=fv.fi;
       if (fv.se<0&&cells[floor(y/w)][floor(x/w)].alpha==0) y-=fv.se;
