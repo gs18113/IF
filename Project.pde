@@ -26,11 +26,11 @@ void setup() {
 }
 
 void loadMap(){
-  String[] _lines=loadStrings("1.txt");
+  String[] _lines=loadStrings("1F.txt");
   rows = _lines.length;
   cols = _lines[0].length();
-  for(int i=1;i<=Config.floors;i++){
-    String[] lines=loadStrings(i+".txt");
+  for(int i=2;i<=Config.floors;i++){
+    String[] lines=loadStrings(i+"F.txt");
     rows += lines.length;
     if(cols != lines[0].length()){
       println("Wrong input file, dimension not matching:" + i + ".txt");
@@ -47,7 +47,7 @@ void loadMap(){
   int currentRow = 0;
   int i;
   for(int k=1;k<=Config.floors;k++){
-    String[] lines=loadStrings(k+".txt");
+    String[] lines=loadStrings(k+"F.txt");
     int _rows = lines.length;
     for(int ii=0;ii<_rows;ii++) {
       for(int j=0;j<cols;j++) {
