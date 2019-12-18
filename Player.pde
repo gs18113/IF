@@ -1,4 +1,5 @@
 import java.util.*;
+import controlP5.*;
 
 class Player extends PApplet{
   float x,y;
@@ -11,9 +12,11 @@ class Player extends PApplet{
   boolean forcemove;
   LinkedList<Buff> appliedBuffs=new LinkedList<Buff>();
   int lastAttack;
+  //ControlP5 cp5=new ControlP5(this);
   
   public void settings() {
     size(Config.panelWidth, Config.panelHeight);
+    //cp5.addSlider("health").setRange(0,200).setSliderMode(Slider.FLEXIBLE);
   }
   
   public void draw() {
@@ -41,6 +44,8 @@ class Player extends PApplet{
     for(Player player : players){
       player.show(this); player.showstatus(this);
     }
+    //Controller c=cp5.getController("health");
+    //Slider slider=cp5.get(Slider.class, "health");
   }
   
   Player(float x,float y,float w, Object... keys) {
