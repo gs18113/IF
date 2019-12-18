@@ -1,7 +1,7 @@
 
 class BoostItem extends Item {
   public static final int itemType = 0;
-  public static final int itemTime = 3000;
+  public static final int itemTime = Config.BoostItemTime;
   
   BoostItem(int px, int py) {
     super(px,py,itemType);

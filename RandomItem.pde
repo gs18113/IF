@@ -2,7 +2,7 @@
 class RandomItem extends Item {
   int rnd;
   public static final int itemType = 1;
-  public static final int itemTime = 5000;
+  public static final int itemTime = Config.RandomItemTime;
   
   RandomItem(int x, int y) {
     super(x, y, itemType);

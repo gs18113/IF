@@ -16,4 +16,6 @@ public class Config{
   static final int attackTime = 10;
   static final float attackMag = 2000;
   static final float attackMax = 30;
+  static final int RandomItemTime = 5000;
+  static final int BoostItemTime = 3000;
 }
