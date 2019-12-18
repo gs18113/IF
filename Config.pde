@@ -20,4 +20,7 @@ public class Config{
   static final int RandomItemTime = 5000;
   static final int BoostItemTime = 3000;
   static final int health = 200;
+  static final int HealthItemTime = 1500;
+  static final float heal = 20.0;
+  static final int immortalTime = 10000;
 }

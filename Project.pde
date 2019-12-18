@@ -64,7 +64,7 @@ void draw() {
       items.add(createItem(px, py, (int)(Math.random()*Config.itemTypes)));
     }
     if(millis()/Config.healthInterval != lastHealthGen){
-      lastGeneration = millis()/Config.healthInterval;
+      lastHealthGen = millis()/Config.healthInterval;
       float maxY = 0;
       for(Player player : players) if(!player.killed) maxY = max(maxY, player.y);
       int py = (int)map(constrain(randomGaussian()*Config.itemDeviation + maxY, 0, Config.panelHeight), 0, Config.panelHeight, 1, rows-1-Config.eps);

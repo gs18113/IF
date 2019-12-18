@@ -14,9 +14,12 @@ class Player extends PApplet{
   int lastAttack;
   ControlP5 cp5;
   Slider _health, _attackTime;
+  int begin;
+  //ControlP5 cp5=new ControlP5(this);
   
   public void settings() {
     size(Config.panelWidth, Config.panelHeight);
+    begin=millis();
   }
   
   public void draw() {
@@ -79,7 +82,7 @@ class Player extends PApplet{
   
   void update(float avpoison) {
     if(killed) return;
-    health-=avpoison/255.0;
+    if (millis()-begin>=Config.immortalTime) health-=avpoison/255.0;
     if(health<0) {
       health=0; killed=true;
     }

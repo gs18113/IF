@@ -31,6 +31,8 @@ Item createItem(int x, int y, int type){
       return new RandomItem(x, y);
     case(BoostItem.itemType):
       return new BoostItem(x, y);
+    case(HealthItem.itemType):
+      return new HealthItem(x, y);
   }
   return null;
 }
