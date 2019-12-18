@@ -26,8 +26,10 @@ class Player extends PApplet{
         cells[i][j].show(this);
       }
     }
-    for(Item item : items){
-      if(s2*Config.cellSize< item.x && item.x < e2*Config.cellSize && s1*Config.cellSize< item.y && item.y < e1*Config.cellSize) item.display(this);
+    synchronized(items){
+      for(Item item : items){
+        if(s2*Config.cellSize< item.x && item.x < e2*Config.cellSize && s1*Config.cellSize< item.y && item.y < e1*Config.cellSize) item.display(this);
+      }
     }
     for(int i=0;i<rows;i++){
       for(int j=0;j<cols;j++){

@@ -34,6 +34,7 @@ void setup() {
       
     }
   }
+  items = new ArrayList();
   players = new ArrayList();
   players.add(new Player(100, 100, Config.cellSize, 'w', 'a', 's', 'd'));
   players.add(new Player(100, 100, Config.cellSize, UP, LEFT, DOWN, RIGHT));
@@ -42,7 +43,6 @@ void setup() {
     PApplet.runSketch(args, players.get(i));
     players.get(i).getSurface().setTitle("Player"+(i+1));
   }
-  items = new ArrayList();
 }
 
 int last;
@@ -61,14 +61,16 @@ void draw() {
     float avpoison=(cells[pi][pj].poison*jw*iw+cells[pi+1][pj].poison*jw*(1-iw)+cells[pi][pj+1].poison*(1-jw)*iw+cells[pi+1][pj+1].poison*(1-jw)*(1-iw));
     player.update(avpoison);
     Iterator<Item> it = items.iterator();
-    while(it.hasNext()){
-      Item item = it.next();
-      if((item.x==pj&&item.y==pi)
-      ||(item.x==pj&&item.y==pi+1)
-      ||(item.x==pj+1&&item.y==pi)
-      ||(item.x==pj+1&&item.y==pi+1)){
-        item.applyItem(player);
-        it.remove();
+    synchronized(items){
+      while(it.hasNext()){
+        Item item = it.next();
+        if((item.x==pj&&item.y==pi)
+        ||(item.x==pj&&item.y==pi+1)
+        ||(item.x==pj+1&&item.y==pi)
+        ||(item.x==pj+1&&item.y==pi+1)){
+          item.applyItem(player);
+          it.remove();
+        }
       }
     }
   }
