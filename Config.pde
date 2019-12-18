@@ -21,4 +21,5 @@ public class Config{
   static final int HealthItemTime = 1500;
   static final float heal = 20.0;
   static final int immortalTime = 10000;
+  static final float endingY = 900;
 }

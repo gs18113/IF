@@ -61,7 +61,24 @@ class Player extends PApplet{
     
   void show(Player player) {
     player.stroke(0); player.fill(0,0,125);
-    if(killed) player.fill(125,0,125);
+    if(killed) {
+      if (this!=null) {
+        player.fill(125,0,125);
+        gameover=true;
+        textSize(32);
+        String end1="GameOver";
+        text(end1, Config.panelWidth/2, Config.panelHeight/2);
+        noLoop();
+      }
+    }
+    else if (gameover) {
+      if (this!=null) {
+        textSize(32);
+        String end2="You Won!";
+        text(end2, Config.panelWidth/2, Config.panelHeight/2);
+        noLoop();
+      }
+    }
     player.pushMatrix();
     player.translate((Config.panelWidth-w)/2, (Config.panelHeight-w)/2);
     player.rect(x-player.x, y-player.y, w, w);
