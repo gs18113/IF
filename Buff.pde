@@ -1,12 +1,14 @@
 
 class Buff {
-  int t;
+  int t, type;
   
-  Buff(int t) {
+  Buff(int t, int type) {
     this.t=t;
+    this.type=type;
   }
   
-  void applyBuff() {
+  Pair applyBuff(float dx, float dy) {
+    Pair v=new Pair(dx, dy);
+    return v;
   }
-  
 }

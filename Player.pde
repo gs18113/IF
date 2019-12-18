@@ -29,7 +29,7 @@ class Player {
     if(health<0) {
       health=0; killed=true;
     }
-    v=health/20.0;
+    v=health/20.0; //change later
     if(keys_down[0]) {
       y-=v; if(cells[floor(y/w)][floor(x/w)].alpha==0) y+=v;
     }
