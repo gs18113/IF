@@ -36,7 +36,7 @@ void setup() {
   for(int i=0;i<players.size();i++){
     String[] args = {"Player"};
     PApplet.runSketch(args, players.get(i));
-    players.get(i).frame.setTitle("Player"+(i+1));
+    players.get(i).getSurface().setTitle("Player"+(i+1));
   }
   frame.requestFocus();
 }
