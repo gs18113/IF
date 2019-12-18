@@ -5,6 +5,7 @@ float[][] laplacian;
 ArrayList<Player> players;
 float dt;
 int rows, cols;
+Boolean gameover=false;
 
 ArrayList<Item> items;
 
