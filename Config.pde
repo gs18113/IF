@@ -12,8 +12,8 @@ public class Config{
   static final float eps=1e-6;
   static final int itemTypes = 2;
   static final int attackInterval = 2000;
-  static final float attackDist = 250.0;
-  static final int attackTime = 2000;
+  static final float attackDist = 100.0;
+  static final int attackTime = 10;
   static final float attackMag = 2000;
   static final float attackMax = 30;
 }
