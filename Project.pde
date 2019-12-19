@@ -56,7 +56,7 @@ void loadMap(){
         int celltype=lines[ii].charAt(j)-'0';
         i = ii+currentRow;
         if(celltype==0){ //free cell
-          cells[i][j]=new Cell(j*s,(i)*s,10000.0,false);
+          cells[i][j]=new Cell(j*s,(i)*s,Config.diff,false);
         }
         else if(celltype==1){ //not diffusive at all, 'wall'
           if(cells[i][j] == null){
