@@ -26,4 +26,5 @@ public class Config{
   static final float endingY = 900;
   static final int floors = 3;
   static final float playerSize = 45.0;
+  static final float diff = 2300.0;
 }

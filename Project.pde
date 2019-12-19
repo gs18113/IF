@@ -67,11 +67,11 @@ void loadMap(){
           cells[i][j]=new Cell(j*s,i*s,1.0,true);
         }
         else if(celltype==3){
-          cells[i][j]=new Cell(j*s,i*s,10000.0,false);
-          if(i+1<rows) cells[i+1][j]=new Cell(j*s,(i+1)*s,2300.0,false);
-          if(i+2<rows) cells[i+2][j]=new Cell(j*s,(i+2)*s,2300.0,false);
-          if(i+3<rows) cells[i+3][j]=new Cell(j*s,(i+3)*s,2300.0,false);
-          if(i+4<rows) cells[i+4][j]=new Cell(j*s,(i+4)*s,2300.0,false);
+          cells[i][j]=new Cell(j*s,i*s,Config.diff,false);
+          if(i+1<rows) cells[i+1][j]=new Cell(j*s,(i+1)*s,Config.diff,false);
+          if(i+2<rows) cells[i+2][j]=new Cell(j*s,(i+2)*s,Config.diff,false);
+          if(i+3<rows) cells[i+3][j]=new Cell(j*s,(i+3)*s,Config.diff,false);
+          if(i+4<rows) cells[i+4][j]=new Cell(j*s,(i+4)*s,Config.diff,false);
 
         }
         
