@@ -38,6 +38,7 @@ void loadMap(){
     }
   }
   
+  
   cells = new Cell[rows][cols];
   laplacian=new float[rows][cols];
   
@@ -48,24 +49,32 @@ void loadMap(){
   int i;
   for(int k=1;k<=Config.floors;k++){
     String[] lines=loadStrings(k+"F.txt");
+    println(k);
     int _rows = lines.length;
     for(int ii=0;ii<_rows;ii++) {
       for(int j=0;j<cols;j++) {
         int celltype=lines[ii].charAt(j)-'0';
         i = ii+currentRow;
-        if(celltype==0) //free cell
+        if(celltype==0){ //free cell
           cells[i][j]=new Cell(j*s,(i)*s,10000.0,false);
-        if(celltype==1){ //not diffusive at all, 'wall'
-          if(cells[i][j] == null) cells[i][j]=new Cell(j*s,(i)*s,0.0,false);
         }
-        if(celltype==2) //source cell
+        else if(celltype==1){ //not diffusive at all, 'wall'
+          if(cells[i][j] == null){
+            cells[i][j]=new Cell(j*s,(i)*s,0.0,false);
+          }
+        }
+        else if(celltype==2){ //source cell
           cells[i][j]=new Cell(j*s,i*s,1.0,true);
-        if(celltype==3){
+        }
+        else if(celltype==3){
           cells[i][j]=new Cell(j*s,i*s,10000.0,false);
-          if(i+1<rows) cells[i+1][j]=new Cell(j*s,(i+1)*s,1000.0,false);
-          if(i+2<rows) cells[i+2][j]=new Cell(j*s,(i+2)*s,1000.0,false);
-          if(i+3<rows) cells[i+3][j]=new Cell(j*s,(i+3)*s,1000.0,false);
-          if(i+4<rows) cells[i+4][j]=new Cell(j*s,(i+4)*s,1000.0,false);
+          if(i+1<rows){
+            cells[i+1][j]=new Cell(j*s,(i+1)*s,10000.0,false);
+            //println("asfasdf");
+          }
+          if(i+2<rows) cells[i+2][j]=new Cell(j*s,(i+2)*s,10000.0,false);
+          if(i+3<rows) cells[i+3][j]=new Cell(j*s,(i+3)*s,10000.0,false);
+          if(i+4<rows) cells[i+4][j]=new Cell(j*s,(i+4)*s,10000.0,false);
         }
         
       }
@@ -89,7 +98,7 @@ void draw() {
       lastGeneration = millis()/Config.itemInterval;
       float minY = Config.panelHeight;
       for(Player player : players) if(!player.killed) minY = min(minY, player.y);
-      int py = (int)map(constrain(randomGaussian()*Config.itemDeviation + minY, 0, Config.panelHeight), 0, Config.panelHeight, 1, rows-1-Config.eps);
+      int py = (int)constrain((randomGaussian()*Config.itemDeviation + minY)/Config.cellSize, 2, rows-2-Config.eps);
       int px = (int)(Math.random()*(cols-2))+1;
       items.add(createItem(px, py, (int)(Math.random()*Config.itemTypes)));
     }
@@ -97,7 +106,8 @@ void draw() {
       lastHealthGen = millis()/Config.healthInterval;
       float maxY = 0;
       for(Player player : players) if(!player.killed) maxY = max(maxY, player.y);
-      int py = (int)map(constrain(randomGaussian()*Config.itemDeviation + maxY, 0, Config.panelHeight), 0, Config.panelHeight, 1, rows-1-Config.eps);
+      //(maxY);
+      int py = (int)constrain((randomGaussian()*Config.itemDeviation + maxY)/Config.cellSize, 2, rows-2-Config.eps);
       int px = (int)(Math.random()*(cols-2))+1;
       items.add(createItem(px, py, HealthItem.itemType));
     }
