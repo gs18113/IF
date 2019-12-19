@@ -19,10 +19,10 @@ public class Config{
   static final float attackMax = 30;
   static final int RandomItemTime = 5000;
   static final int BoostItemTime = 3000;
-  static final int health = 1200;
+  static final int health = 800;
   static final int HealthItemTime = 1000;
   static final float heal = 20.0;
-  static final int immortalTime = 10000;
+  static final int immortalTime = 5000;
   static final float endingY = 900;
   static final int floors = 3;
   static final float playerSize = 45.0;
