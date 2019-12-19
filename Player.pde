@@ -74,6 +74,7 @@ class Player extends PApplet{
     if(killed) {
       player.fill(125,0,125);
       gameover=true;
+      for(Player p : players) if( player != this ) player.win=true;
       finish(win);
     }
     else if (gameover) {
