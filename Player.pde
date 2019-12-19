@@ -91,11 +91,11 @@ class Player extends PApplet{
   
   void update(float avpoison) {
     if(killed) return;
-    //if (millis()-begin>=Config.immortalTime) health-=avpoison/255.0;
+    if (millis()-begin>=Config.immortalTime) health-=avpoison/255.0;
     if(health<0) {
       health=0; killed=true;
     }
-    v=health/50.0+2; //change later
+    v=health/50.0+5; //change later
     if(_attackTime != null){
       _health.setValue(health);
       _attackTime.setValue(constrain(Config.attackInterval-millis()+lastAttack, 0, Config.attackInterval));
@@ -161,17 +161,22 @@ class Player extends PApplet{
   void applyMovement(Pair fv){
     x+=fv.fi;
     y+=fv.se;
-    if (fv.fi<0&&cells[floor(y/Config.cellSize)][floor(x/Config.cellSize)].alpha==0) x=Config.cellSize*floor((x+w)/Config.cellSize)+Config.eps;
-    else if (fv.fi<0&&cells[floor((y+w)/Config.cellSize)][floor(x/Config.cellSize)].alpha==0) x=Config.cellSize*floor((x+w)/Config.cellSize)+Config.eps;
+    x -= 15;
+    y -= 15;
+    if (fv.fi<0&&cells[floor(y/Config.cellSize)][floor(x/Config.cellSize)].alpha==0) x=Config.cellSize*floor((x+Config.cellSize)/Config.cellSize)+Config.eps;
+    else if (fv.fi<0&&cells[floor((y+w)/Config.cellSize)][floor(x/Config.cellSize)].alpha==0) x=Config.cellSize*floor((x+Config.cellSize)/Config.cellSize)+Config.eps;
     
     if (fv.fi>0&&cells[floor(y/Config.cellSize)][floor((x+w)/Config.cellSize)].alpha==0) x=Config.cellSize*floor(x/Config.cellSize)-Config.eps;
     else if (fv.fi>0&&cells[floor((y+w)/Config.cellSize)][floor((x+w)/Config.cellSize)].alpha==0) x=Config.cellSize*floor(x/Config.cellSize)-Config.eps;
     
-    if (fv.se<0&&cells[floor(y/Config.cellSize)][floor(x/Config.cellSize)].alpha==0) y=Config.cellSize*floor((y+w)/Config.cellSize)+Config.eps;
-    else if (fv.se<0&&cells[floor(y/Config.cellSize)][floor((x+w)/Config.cellSize)].alpha==0) y=Config.cellSize*floor((y+w)/Config.cellSize)+Config.eps;
+    if (fv.se<0&&cells[floor(y/Config.cellSize)][floor(x/Config.cellSize)].alpha==0) y=Config.cellSize*floor((y+Config.cellSize)/Config.cellSize)+Config.eps;
+    else if (fv.se<0&&cells[floor(y/Config.cellSize)][floor((x+w)/Config.cellSize)].alpha==0) y=Config.cellSize*floor((y+Config.cellSize)/Config.cellSize)+Config.eps;
     
-    if (fv.se>0&&cells[floor((y+w)/Config.cellSize)][floor(x/Config.cellSize)].alpha==0) y=Config.cellSize*floor(y/Config.cellSize)-Config.eps;
-    else if (fv.se>0&&cells[floor((y+w)/Config.cellSize)][floor((x+w)/Config.cellSize)].alpha==0) y=Config.cellSize*floor(y/Config.cellSize)-Config.eps;
+    if (fv.se>0&&cells[floor((y+w)/Config.cellSize)][floor(x/Config.cellSize)].alpha==0) y=Config.cellSize*floor((y+w)/Config.cellSize)-w-Config.eps;
+    else if (fv.se>0&&cells[floor((y+w)/Config.cellSize)][floor((x+w)/Config.cellSize)].alpha==0) y=Config.cellSize*floor((y+w)/Config.cellSize)-w-Config.eps;
+    
+    x += 15;
+    y += 15;
   }
   
   void attack(Player player){

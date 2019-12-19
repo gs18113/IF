@@ -16,8 +16,8 @@ void setup() {
   
   items = new ArrayList();
   players = new ArrayList();
-  players.add(new Player(100, 100, Config.playerSize, 'w', 'a', 's', 'd', '`'));
-  players.add(new Player(100, 100, Config.playerSize, UP, LEFT, DOWN, RIGHT, 'm'));
+  players.add(new Player(200, 200, Config.playerSize, 'w', 'a', 's', 'd', '`'));
+  players.add(new Player(200, 200, Config.playerSize, UP, LEFT, DOWN, RIGHT, 'm'));
   for(int i=0;i<players.size();i++){
     String[] args = {"Player"};
     PApplet.runSketch(args, players.get(i));
