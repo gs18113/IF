@@ -15,6 +15,8 @@ class Player extends PApplet{
   ControlP5 cp5;
   Slider _health, _attackTime;
   int begin;
+  boolean win=false;
+  boolean lose=false;
   //ControlP5 cp5=new ControlP5(this);
   
   public void settings() {
@@ -72,11 +74,10 @@ class Player extends PApplet{
     if(killed) {
       player.fill(125,0,125);
       gameover=true;
-      text("GameOver", 500, 500);
-      noLoop();
+      finish(win);
     }
     else if (gameover) {
-      noLoop();
+      finish(win);
     }
     player.pushMatrix();
     player.translate((Config.panelWidth-w)/2, (Config.panelHeight-w)/2);
@@ -154,6 +155,7 @@ class Player extends PApplet{
         }
       }
     }
+    if(y > rows*Config.cellSize-Config.playerSize-30) win=true;
   }
   
   void applyMovement(Pair fv){
@@ -180,5 +182,11 @@ class Player extends PApplet{
     if(-PI*3/4 < rad && rad < -PI/4) return;
     float fv = constrain(Config.attackMag / dist, 0, Config.attackMax);
     player.appliedBuffs.add(new ForceBuff(Config.attackTime, rad, fv));
+  }
+  
+  void finish(boolean asdf){
+    textSize(30);
+    if(asdf) text("YOU WIN!", Config.panelWidth/2-30, Config.panelHeight/2);
+    else text("YOU LOSE!", Config.panelWidth/2-40, Config.panelHeight/2);
   }
 }
