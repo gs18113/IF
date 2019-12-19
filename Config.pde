@@ -8,7 +8,7 @@ public class Config{
   static final float dispX = (panelWidth-cellSize)/2;
   static final float dispY = (panelHeight-cellSize)/2;
   static final int itemInterval = 3000;
-  static final int healthInterval = 3000;
+  static final int healthInterval = 500;
   static final float itemDeviation = 5;
   static final float eps=1e-4;
   static final int itemTypes = 2;
@@ -19,8 +19,8 @@ public class Config{
   static final float attackMax = 30;
   static final int RandomItemTime = 5000;
   static final int BoostItemTime = 3000;
-  static final int health = 300;
-  static final int HealthItemTime = 1500;
+  static final int health = 1200;
+  static final int HealthItemTime = 1000;
   static final float heal = 20.0;
   static final int immortalTime = 10000;
   static final float endingY = 900;

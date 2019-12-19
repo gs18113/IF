@@ -96,7 +96,7 @@ class Player extends PApplet{
     if(health<0) {
       health=0; killed=true;
     }
-    v=health/50.0+5; //change later
+    v=health/150.0+5; //change later
     if(_attackTime != null){
       _health.setValue(health);
       _attackTime.setValue(constrain(Config.attackInterval-millis()+lastAttack, 0, Config.attackInterval));

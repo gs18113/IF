@@ -5,7 +5,7 @@ class HealthItem extends Item {
   
   HealthItem(int px, int py) {
     super(px,py,itemType);
-    this.itemColor=255;
+    this.itemColor=135;
   }
   
   void applyItem(Player player){
