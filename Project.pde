@@ -102,6 +102,12 @@ void draw() {
       items.add(createItem(px, py, HealthItem.itemType));
     }
   }
+  boolean flag=false;
+  for(Player player : players) flag=flag||player.win;
+  if(flag){
+    gameover = true;
+    noLoop();
+  }
   for(Player player : players){
     int pj=floor(player.x/Config.cellSize); float jw=(player.x/Config.cellSize-floor(player.x/Config.cellSize));
     int pi=floor(player.y/Config.cellSize); float iw=(player.y/Config.cellSize-floor(player.y/Config.cellSize));
